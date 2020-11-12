@@ -1,0 +1,39 @@
+.lobby_wrap {
+    position: absolute;
+    width: 100%;
+	z-index: 1;
+}
+
+.lobby_wrap a {
+    text-decoration: none;
+}
+
+.temp {
+    border: 1px solid white;
+    color: white;
+    margin: 30px auto;
+    text-align: center;
+    width: 250px;
+
+
+    /* display: none; */
+}
+
+
+/* Large devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+    .temp {
+        display: none;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+
+}

@@ -1,0 +1,62 @@
+.host_wrap {
+    position: absolute;
+    width: 100%;
+	z-index: 1;
+}
+
+.host_wrap h2 {
+	text-align: center;
+	color: #fff;
+	font-size: 50px;
+	margin: 200px 0 10px 0;
+}
+
+.host_wrap h4 {
+	border: 1px solid white;
+	cursor: pointer;
+	text-align: center;
+	color: #fff;
+	font-size: 30px;
+	height: 50px;
+    margin: 10px auto 20px auto;
+    width: 200px;
+}
+
+.host_wrap h4:hover {
+	background-color: white;
+	color: #3a3a3a;
+}
+
+.header {
+    color: white;
+    text-align: center;
+}
+
+
+
+/* Large devices (desktops, 992px and below) */
+@media (max-width: 992px) {
+    .host_wrap h2 {
+        margin-top: 30%;
+	}
+}
+
+
+
+
+
+/* Medium devices (tablets, 768px and below) */
+@media (max-width: 768px) {
+    .host_wrap h2 {
+        margin-top: 0;
+    } 
+}
+
+
+
+
+
+/* Small devices (landscape phones, 576px and below) */
+@media (max-width: 576px) {
+
+}

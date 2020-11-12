@@ -1,0 +1,58 @@
+.player_list_wrap {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.header {
+    color: white;
+    border: 1px solid #ffffff;
+    border-width: 0 0 4px 0;
+    width: 200px;
+    text-align: center;
+}
+
+.game_players_wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 300px;
+    justify-content: space-around;
+    margin-top: 10px;
+    max-width: 910px;
+    width: 100%;
+}
+
+.game_player_cell {
+    /* border: 1px solid blue; */
+    color: white;
+    text-align: center;
+    width: 200px;
+}
+
+.highlight {
+    color: yellow;
+}
+
+
+
+
+/* Large devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+    .game_players_wrap {
+        width: 100%;
+        overflow-y: scroll;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+
+}
