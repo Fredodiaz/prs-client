@@ -15,14 +15,16 @@
 .game_options {
 	align-items: center;
     display: flex;
-    flex-direction: column;
+	flex-direction: column;
+	position: relative;
 }
 
 .game_options h6 {
-	margin-top: 10px;
+	margin-top: 40px;
 	color: white;
 	font-size: 20px;
 }
+
 .banner_text h4 {
 	border: 1px solid white;
 	cursor: pointer;
@@ -33,14 +35,22 @@
     margin: 10px auto 20px auto;
     width: 200px;
 }
+
 .banner_text h4:hover {
 	background-color: white;
 	color: #3a3a3a;
 }
+
+.game_options p {
+	position: absolute;
+	top: 220px;
+}
+
 .banner_text input {
 	font-family: 'Baloo 2', cursive;
 	font-size: 24px;
 	height: 50px;
+	margin-top: -10px;
 	width: 200px;
 	text-align: center;
 }
@@ -62,7 +72,7 @@
 /* Large devices (desktops, 992px and below) */
 @media (max-width: 992px) {
     .banner_text h2 {
-        margin-top: 30%;
+        margin-top: 20%;
 	}
 }
 

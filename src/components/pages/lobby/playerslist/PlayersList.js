@@ -1,5 +1,5 @@
 // React
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Redux
 import { connect } from 'react-redux'
@@ -16,24 +16,15 @@ const PlayersList = (props) => {
     useEffect(() => {
         window.IO.on('refreshLobbyPlayers', (players) => {
             SETPLAYERS(players || PLAYERS)
-            console.log("PLAYERS", PLAYERS, user)
+            setPlayerAmount(players.length || 0) // players might be null and may error
         })
-        window.IO.on('displayPlayersInLobby', handleDisplayPlayersInLobby)
         // eslint-disable-next-line
     }, [])
 
-    const handleDisplayPlayersInLobby = (numOfPlayers) => {
-        console.log(numOfPlayers, 'PLAYERS')
-        setPlayerAmount(numOfPlayers)
-    }
-
+    // Renders Players and Highlights Client Name
     const renderPlayers = () => {
         return PLAYERS.map(player => (
-            <Fragment>
-                {console.log(user, 'USERRRRRRRRRRRRRR')}
-                <h1 className={`${css.game_player_cell} ${player.name === user.name ? css.highlight : ''}`} key={player.id}>{player.name}</h1>
-            </Fragment>
-            
+            <h1 className={`${css.game_player_cell} ${player.name === user.name ? css.highlight : ''}`} key={player.id}>{player.name}</h1>
         ))
     }
 

@@ -27,9 +27,13 @@
 	color: #3a3a3a;
 }
 
-.header {
+.header, .warning {
     color: white;
     text-align: center;
+}
+
+.warning {
+	margin-top: -15px;
 }
 
 
@@ -37,7 +41,7 @@
 /* Large devices (desktops, 992px and below) */
 @media (max-width: 992px) {
     .host_wrap h2 {
-        margin-top: 30%;
+        margin-top: 20%;
 	}
 }
 

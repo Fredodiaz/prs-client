@@ -1,21 +1,22 @@
 // React
 import React, { useEffect, useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 // Redux
 import { connect } from 'react-redux'
 
 // Actions
-import { setUserName } from '../../../actions/userActions'
+import { setCurrentRoom, setJoinedGame, setUserName } from '../../../actions/userActions'
 
 // Styles
 import css from './home.module.css'
 
 const Home = (props) => {
-    const { setUserName } = props
-    const [code, setCode] = useState(0)
+    const { user, setCurrentRoom, setJoinedGame, setUserName } = props
+
     const [ joinError, setJoinError ] = useState(false)
-    const [ joinSuccess, setJoinSuccess ] = useState(false)
+    const [code, setCode] = useState(0)
+
 
     useEffect(() => {
         window.IO.on('handlePersonJoinAttempt', handleIfUserSuccesfulyJoined)
@@ -32,33 +33,39 @@ const Home = (props) => {
     /* Determines If User Should Redirect To Lobby Based On Server Response */
     const handleIfUserSuccesfulyJoined = (isClientJoined) => {
         if(isClientJoined) {
-            setJoinSuccess(true)
             setUserName(isClientJoined)
+            setJoinedGame(true)
         } else {
             setJoinError(true)
             setTimeout(() => {
                 setJoinError(false)
             }, 2000)
+            setCurrentRoom('')
         }
     }
 
     /* Sends Server Game Code */
     const attemptJoinGame = () => {
         window.IO.emit('joinGame', code)
-        console.log('CODE', code)
+        setCurrentRoom(code)
     }
 
     return (
         <div >
             <div className={css.banner_text}>
-                <h2>Hand Battle Royale!</h2>
+                <h2>Rock-Paper-Scissors-Royale!</h2>
                 <div className={css.game_options}>
+                    <Link style={{marginBottom: '20px'}} to={'/host'}>
+                        <h4>Host Game</h4>
+                    </Link>
+                    {joinError ? <p>Invalid Code!</p> : null}
+                    
+
                     <h4 onClick={() => attemptJoinGame()}>Join Game</h4>
                     <input onChange={(e) => toggleCodeChange(parseInt(e.target.value) || 0)} value={code} />
-                    {joinError ? <p>Invalid Code!</p> : null}
                     <h6>Welcome MightyDeer12</h6>
-                    <h6>(Randomly Generated Names)</h6>
-                    {joinSuccess ? <Redirect to={'/lobby'}/> : null}
+
+                    {user.hasJoinedGame ? <Redirect to={'/lobby'}/> : null}
                 </div>
             </div>
         </div>
@@ -69,4 +76,4 @@ const mapStateToProps = state => ({
     user: state.user
 })
 
-export default connect(mapStateToProps, { setUserName })(Home)
+export default connect(mapStateToProps, { setCurrentRoom, setJoinedGame, setUserName })(Home)

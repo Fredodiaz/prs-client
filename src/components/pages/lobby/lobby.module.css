@@ -1,39 +1,61 @@
 .lobby_wrap {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     width: 100%;
 	z-index: 1;
+}
+
+.lobby_wrap h2 {
+	text-align: center;
+	color: #fff;
+	font-size: 50px;
+	margin: 200px 0 10px 0;
 }
 
 .lobby_wrap a {
     text-decoration: none;
 }
 
-.temp {
-    border: 1px solid white;
+.lobby_button {
+	border: 1px solid white;
+	cursor: pointer;
+	text-align: center;
+	color: #fff;
+	font-size: 30px;
+	height: 50px;
+    margin: 10px 0 20px 0;
+    width: 200px;
+}
+
+.lobby_button:hover {
+	background-color: white;
+	color: #3a3a3a;
+}
+
+.warning {
     color: white;
-    margin: 30px auto;
-    text-align: center;
-    width: 250px;
-
-
-    /* display: none; */
+    margin-top: -15px;
 }
 
 
-/* Large devices (desktops, 992px and up) */
+/* Large devices (desktops, 992px and below) */
 @media (max-width: 992px) {
-    .temp {
-        display: none;
-    }
+    .lobby_wrap h2 {
+        margin-top: 20%;
+	}
 }
 
-/* Medium devices (tablets, 768px and up) */
+/* Medium devices (tablets, 768px and below) */
 @media (max-width: 768px) {
-
+    .lobby_wrap h2 {
+        margin-top: 0;
+    } 
 }
 
 
-/* Small devices (landscape phones, 576px and up) */
+/* Small devices (landscape phones, 576px and below) */
 @media (max-width: 576px) {
 
 }
