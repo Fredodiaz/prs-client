@@ -1,0 +1,30 @@
+.scoreboard_wrap {
+    border: 4px solid white;
+    
+    margin-top: 100px;
+    position: relative;
+    width: 240px;
+}
+
+.score_text {
+    font-size: 40px;
+    text-align: center;
+    margin: 0;
+}
+
+.scoreboard_wrap h2 {
+    background-color: #e14a67;
+    color: white;
+    padding: 5px 10px;
+    position: absolute;
+    margin: 0;
+    top: 5px;
+}
+
+.identifier_right {
+    right: -40px;
+}
+
+.identifier_left {
+    left: -40px;
+}
