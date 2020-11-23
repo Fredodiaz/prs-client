@@ -1,5 +1,5 @@
 // TYPES
-import { SET_CURRENT_ROOM, SET_JOINED_GAME, SET_USER_NAME } from './index'
+import { SET_CURRENT_ROOM, SET_IS_IN_GAME, SET_JOINED_GAME, SET_USER_NAME, SET_USER_OPPONENT } from './index'
 
 /* Sets Room User Joined */
 export const setCurrentRoom = (roomName) => dispatch => {
@@ -24,3 +24,16 @@ export const setUserName = (username) => dispatch => {
     })
 }
 
+export const setPlayerOpponent = ( opponent ) => dispatch => {
+    dispatch({
+        type: SET_USER_OPPONENT,
+        payload: opponent
+    })
+}
+
+export const setIsUserInGame = (isUserInGame) => dispatch => {
+    dispatch({
+        type: SET_IS_IN_GAME,
+        payload: isUserInGame
+    })
+}
