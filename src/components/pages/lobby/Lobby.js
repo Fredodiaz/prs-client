@@ -6,7 +6,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // Actions
-import { setCurrentRoom, setJoinedGame } from '../../../actions/userActions'
+import { setCurrentRoom, setIsUserInGame, setJoinedGame } from '../../../actions/userActions'
 
 // Components
 import Players from './playerslist/PlayersList'
@@ -15,19 +15,17 @@ import Players from './playerslist/PlayersList'
 import css from './lobby.module.css'
 
 const Lobby = (props) => {
-    const { user, setCurrentRoom, setJoinedGame } = props
-
-    // const [ leftLobby, setLeftLobby ] = useState(false)
+    const { user, setCurrentRoom, setIsUserInGame, setJoinedGame } = props
 
     useEffect(() => {
         window.IO.on('lobbyRemoved', () => {
             alert('Host left your Game')
             handleLeaveLobby()
         })
+
+        window.IO.on('startedGame', () => setIsUserInGame(true))
         // eslint-disable-next-line
     }, [])
-
-
 
     const handleLeaveLobby = () => {
         window.IO.emit('leaveLobby')
@@ -44,6 +42,7 @@ const Lobby = (props) => {
             </Link>
             <p className={css.warning}>(Warning: "Leave Game" will remove you from this match)</p>
             {!user.hasJoinedGame ? <Redirect to={'/'}/> : null}
+            {user.isInGame ? <Redirect to={'/game'}/> : null}
         </div>
     )
 }
@@ -52,4 +51,4 @@ const mapStateToProps = state => ({
     user: state.user
 })
 
-export default connect(mapStateToProps, { setCurrentRoom, setJoinedGame })(Lobby)
+export default connect(mapStateToProps, { setCurrentRoom, setIsUserInGame, setJoinedGame })(Lobby)
