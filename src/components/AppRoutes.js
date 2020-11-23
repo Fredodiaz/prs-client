@@ -1,6 +1,12 @@
 // React
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+// Redux
+import { connect } from 'react-redux'
+
+// Actions
+import { setPlayersInGame } from '../actions/gameActions'
 
 // Components
 import Game from './pages/game/Game'
@@ -15,17 +21,20 @@ import Logo from '../assets/logo.png'
 // Style
 import css from './approutes.module.css'
 
+const AppRoutes = (props) => {
+    const { setPlayersInGame } = props; 
 
+    window.IO.on('init', (msg) => {
+        console.log(msg)
+    });
 
-
-const AppRoutes = () => {
-    
-    // useEffect(() => {
-        window.IO.on('init', (msg) => {
-            console.log(msg)
-        });
-        // console.log('ran IO', window.IO)
-    //   }, [])
+    useEffect(() => {
+        window.IO.on('refreshLobbyPlayers', (players) => {
+            setPlayersInGame(players)
+            console.log('PLAYER COUNT:', players.length)
+        })
+        // eslint-disable-next-line
+      }, [])
 
     return (
         <Router>
@@ -35,7 +44,7 @@ const AppRoutes = () => {
             <Route exact path={'/game'} component={Game}/>
             <Route exact path={'/results'} component={Results}/>
 
-            <Route exact path={['/', '/lobby', '/host', '/results']} render={() => (
+            <Route exact path={['/', '/game', '/lobby', '/host', '/results']} render={() => (
                 <div className={css.area} >
                     <ul className={css.circles}>
                         <li></li>
@@ -57,4 +66,8 @@ const AppRoutes = () => {
     )
 }
 
-export default AppRoutes
+const mapStateToProps = state => ({
+    game: state.game
+})
+
+export default connect(mapStateToProps, { setPlayersInGame })(AppRoutes)

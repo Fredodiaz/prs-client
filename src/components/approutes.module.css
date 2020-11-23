@@ -138,5 +138,6 @@
 	bottom: 0;
 	position: absolute;
 	left: 10px;
-	width: 150px;
+    width: 150px;
+    z-index: 9;
 }
