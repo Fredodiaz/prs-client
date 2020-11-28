@@ -1,5 +1,5 @@
 // Types
-import { SET_CURRENT_ROOM, SET_IS_IN_GAME, SET_JOINED_GAME, SET_USER_NAME, SET_USER_OPPONENT } from '../actions'
+import { SET_CURRENT_CHOICE, SET_CURRENT_ROOM, SET_IS_IN_GAME, SET_JOINED_GAME, SET_USER_NAME, SET_USER_OPPONENT } from '../actions'
 
 const initialState = {
     currentRoom: '',
@@ -7,6 +7,7 @@ const initialState = {
     isInGame: false,
     name: '',
     opponent: {},
+    currentChoice: ''
 }
 
 const userReducers = (state=initialState, action) => {
@@ -35,6 +36,11 @@ const userReducers = (state=initialState, action) => {
             return {
                 ...state,
                 isInGame: action.payload
+            }
+        case SET_CURRENT_CHOICE:
+            return {
+                ...state,
+                currentChoice: action.payload
             }
         default:
             return state;
