@@ -29,3 +29,10 @@
 .individual_option:hover {
     background-color: #e14a67;
 }
+
+.timer_wrap {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}

@@ -1,16 +1,23 @@
 // React
 import React, { useEffect } from 'react'
 
+// Redux
+import { connect } from 'react-redux'
+
 // Icons
+// eslint-disable-next-line
 import { FaRegHandPaper, FaRegHandRock, FaRegHandScissors } from 'react-icons/fa'
 
 // Styles
 import css from './results.module.css'
 
-const Results = () => {
+const Results = (props) => {
+    const { user } = props
+
     useEffect(() => {
         
-    })
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <div className={css.results_wrap}>
@@ -25,10 +32,14 @@ const Results = () => {
 
             <div className={css.individual_option_wrap}>
                 <div className={css.individual_option}><FaRegHandScissors /></div>
-                <p>Opponent</p>
+                <p>{user.opponent.name}</p>
             </div>
         </div>
     )
 }
 
-export default Results
+const mapStateToProps = state => ({
+    user: state.user
+})
+
+export default connect(mapStateToProps, {})(Results)

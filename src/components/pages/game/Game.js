@@ -26,22 +26,24 @@ const Game = (props) => {
     const [ text, setText ] = useState('')
 
     useEffect(() => {
-        window.IO.on('receivePlayerOpponent', handleReceivedOpponent)
-        window.IO.emit('findPlayerOpponent')
+        window.IO.on('receivePlayerOpponent', handleReceivedOpponent) // returns opponent object
+
+
+        // window.IO.on('handleMove', handleMove())
         //eslint-disable-next-line
     }, [])
 
-    const handleReceivedOpponent = (opponent) => {
-        console.log('OPPONENT', opponent)
-        setPlayerOpponent(opponent)
 
-        handleNewGame(opponent.name)
+    /* Shows Player (10 Seconds) */
+    const handleReceivedOpponent = (opponent) => {
+        setPlayerOpponent(opponent)
+        handleNewRound(opponent.name)
         setTimeout(() => {
             setDisplayGame(true)
         }, 9000)
     }
 
-    const handleNewGame = (val) => {
+    const handleNewRound = (val) => {
         handleNewPhrase('Starting Game!')
         setTimeout(() => {
             handleNewPhrase('Finding Opponent!')

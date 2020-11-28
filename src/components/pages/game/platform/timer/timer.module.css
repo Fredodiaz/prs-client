@@ -1,0 +1,9 @@
+.timer_wrap {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.hide {
+    display: none;
+}
