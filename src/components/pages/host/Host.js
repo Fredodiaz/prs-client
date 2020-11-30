@@ -15,10 +15,11 @@ const Host = (props) => {
     const { game } = props
 
     const [ GAMECODE, SETGAMECODE ] = useState(12345)
+    const [ disabled, setDisables ] = useState(false)
 
     useEffect(() => {
         window.IO.on('gameCode', handleGameCode)
-        window.IO.on('startedGame')
+        // window.IO.on('startedGame')
         window.IO.emit('hostGame');
     }, [])
 
@@ -31,6 +32,7 @@ const Host = (props) => {
     }
 
     const handleHostStartGame = () => {
+        setDisables(true)
         if(game.players.length < 2) {
             alert('Must need at least two players to start the game')
         } else {
@@ -46,7 +48,8 @@ const Host = (props) => {
                 <h1 className={css.header}>Game Code: {GAMECODE}</h1>
                 <Players />
             </div>
-            <h4 className={css.start_game} onClick={() => handleHostStartGame()}>Start Game</h4>
+            {disabled ? <h4 className={css.start_game} >Start Game</h4> : 
+            <h4 className={css.start_game} onClick={() => handleHostStartGame()}>Start Game</h4>}
             <Link onClick={handleHostLeave} style={{textDecoration: 'none'}} to={'/'}>
                 <h4>Go Back</h4>
             </Link>
