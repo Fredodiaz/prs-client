@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 // Actions
-import { setPlayerOpponent } from '../../../actions/userActions'
+import { setPlayerOpponent, setHasLost, setHasWon, setScore } from '../../../actions/userActions'
 
 // Components
 import Platform from './platform/Platform'
@@ -17,39 +17,63 @@ import { Redirect } from 'react-router-dom'
 
 const Game = (props) => {
     // eslint-disable-next-line
-    const { game, user, setPlayerOpponent } = props
+    const { user, setPlayerOpponent, setHasLost, setHasWon, setScore } = props
     
-
     const [ displayGame, setDisplayGame ] = useState(false)
 
     const [ style, setStyle ] = useState('')
     const [ text, setText ] = useState('')
 
     useEffect(() => {
-        window.IO.on('receivePlayerOpponent', handleReceivedOpponent) // returns opponent object
+        let unmounted = false;
+        window.IO.on('startedNewMatch', () => {
+            if(!unmounted && !user.hasWon) {
+                window.IO.emit('findPlayerOpponent')
+            }
+        })
+        window.IO.on('receivePlayerOpponent', (opponent, matchNumber) => {
+            if(!unmounted && !user.hasWon) {
+                handleReceivedOpponent(opponent, matchNumber)
+            }
+        })
 
+        window.IO.on('handleLoss', () => {
+            if(!unmounted) {
+                setHasLost(true)
+            }
+        })
 
+        window.IO.on('winnerOfMatch', () => {
+            if(!unmounted) {
+                setHasWon(true)
+            }
+        })
+
+        return () => { unmounted = true };
         // window.IO.on('handleMove', handleMove())
         //eslint-disable-next-line
     }, [])
 
 
     /* Shows Player (10 Seconds) */
-    const handleReceivedOpponent = (opponent) => {
+    const handleReceivedOpponent = (opponent, matchNumber) => {
+        setScore(0, 0, '')
         setPlayerOpponent(opponent)
-        handleNewRound(opponent.name)
+        handleNewMatch(opponent.name, matchNumber)
         setTimeout(() => {
             setDisplayGame(true)
+            window.IO.emit('matchedAndReadyToBattle')
+            console.log("STARTING MATCHING AND READY")
         }, 9000)
     }
 
-    const handleNewRound = (val) => {
-        handleNewPhrase('Starting Game!')
+    const handleNewMatch = (oppName, matchNumber) => {
+        handleNewPhrase(`Starting Round ${matchNumber}!`)
         setTimeout(() => {
             handleNewPhrase('Finding Opponent!')
         }, 3000)
         setTimeout(() => {
-            handleNewPhrase(`You vs ${val}`)
+            handleNewPhrase(`You vs ${oppName}`)
         }, 6000)
     }
 
@@ -64,19 +88,23 @@ const Game = (props) => {
     return (
         <div className={css.game_wrap}>
             
-            {displayGame ? <Platform /> : null}
+            <div style={{display: displayGame ? 'initial' : 'none'}}>
+                <Platform />    
+            </div>
+           
             <div className={css.text_popup_wrap}>
                 <h1 className={`${css.text_popup} ${style}`}>{text}</h1>
             </div>
 
             {!user.isInGame ? <Redirect to={'/lobby'}/> : null}
+            {user.hasLost ? <Redirect to={'/results'} /> : null}
+            {user.hasWon ? <Redirect to={'/results'} /> : null}
         </div>
     )
 }
 
 const mapStateToProps = state => ({
-    game: state.game,
     user: state.user,
 })
 
-export default connect(mapStateToProps, { setPlayerOpponent })(Game)
+export default connect(mapStateToProps, { setPlayerOpponent, setHasLost, setHasWon, setScore })(Game)

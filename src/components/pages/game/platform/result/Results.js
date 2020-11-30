@@ -19,19 +19,32 @@ const Results = (props) => {
         // eslint-disable-next-line
     }, [])
 
+    const renderChoice = (moveType) => {
+        switch(moveType) {
+            case 'rock':
+                return <FaRegHandRock />
+            case 'paper':
+                return <FaRegHandPaper />
+            case 'scissors':
+                return <FaRegHandScissors />
+            default:
+                return <FaRegHandRock />
+        }
+    }
+
     return (
         <div className={css.results_wrap}>
             <div className={css.individual_option_wrap}>
-                <div className={css.individual_option}><FaRegHandPaper /></div>
+                <div className={css.individual_option}>{renderChoice(user.playerMoves.ofUser)}</div>
                 <p>You</p>
             </div>
 
             <div className={css.result}>
-                <p>You Win!</p>
+                <p>You {user.score.status}</p>
             </div>
 
             <div className={css.individual_option_wrap}>
-                <div className={css.individual_option}><FaRegHandScissors /></div>
+                <div className={css.individual_option}>{renderChoice(user.playerMoves.ofOpp)}</div>
                 <p>{user.opponent.name}</p>
             </div>
         </div>

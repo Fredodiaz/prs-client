@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 // Actions
-import { setCurrentChoice } from '../../../../actions/userActions'
+import { setBothPlayersChoice, setCurrentChoice, setScore } from '../../../../actions/userActions'
 
 // Components
 import Results from './result/Results'
@@ -19,13 +19,33 @@ import css from './platform.module.css'
 import { FaRegHandPaper, FaRegHandRock, FaRegHandScissors } from 'react-icons/fa'
 
 const Platform = (props) => {
-    const { user, setCurrentChoice } = props
+    const { user, setCurrentChoice, setScore, setBothPlayersChoice } = props
 
     const [ optionSelected, setOptionSelected ] = useState(false)
 
     useEffect(() => {
-        window.IO.on('receiveCurrentMove', handleChoiceMade)
+        let unmounted = false;
 
+        
+        window.IO.on('receiveCurrentMove', () => {
+            if(!unmounted) {
+                handleChoiceMade()
+            }
+        })
+        window.IO.on('pointUpdate', (userPoints, oppPoints, status, userMove, oppMove) => {
+            if(!unmounted) {
+                setScore(userPoints, oppPoints, status)
+                setBothPlayersChoice(userMove, oppMove)
+                setOptionSelected(true)
+                setTimeout(() => {
+                    setOptionSelected(false)
+                    window.IO.emit('matchedAndReadyToBattle')
+                }, 3000)
+                
+            }
+        })
+
+        return () => { unmounted = true };
     }, [])
 
     /* When Move Is Selected Show Pop Up Of That Move */
@@ -40,10 +60,7 @@ const Platform = (props) => {
     }
 
     const handleChoiceMade = () => {
-        // setCounter(counter + 1)
-        let selection = ''
-        console.log('GIVEN CHOICE:', user.currentChoice, user.currentChoice === '')
-        
+        let selection = ''        
 
         if(user.currentChoice === '') {
             let val = Math.floor(Math.random() * Math.floor(3)); // 0, 1 or 2
@@ -67,9 +84,6 @@ const Platform = (props) => {
 
     return (
         <div className={css.platform_wrap}>
-            <p style={{textAlign: 'center'}}>Your username is {user.name}</p>
-            <p style={{textAlign: 'center'}}>Your opponent is {user.opponent.name}</p>
-
             <Scoreboard />
 
             <div className={css.options_wrap}>
@@ -79,15 +93,9 @@ const Platform = (props) => {
             </div>
 
             {optionSelected ? <Results /> : null}
-            
-            <div className={css.timer_wrap}>
-                Make a move or one will be made for you!
-                
-                <Timer onTimerEnd={() => handleChoiceMade()} duration={10}/>
 
-                <button onClick={() => handleChoiceMade()}>
-                    Check Choice
-                </button>
+            <div className={css.timer_wrap}>
+                <Timer onTimerEnd={() => handleChoiceMade()} duration={10}/>
             </div>
 
         </div>
@@ -99,4 +107,4 @@ const mapStateToProps = state => ({
     user: state.user
 })
 
-export default connect(mapStateToProps, { setCurrentChoice })(Platform)
+export default connect(mapStateToProps, { setCurrentChoice, setScore, setBothPlayersChoice })(Platform)

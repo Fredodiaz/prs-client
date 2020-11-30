@@ -23,6 +23,7 @@
 
 .text_popup {
     font-size: 0;
+    text-align: center;
     transition: 250ms ease-in-out;
 }
 
