@@ -61,7 +61,7 @@ const Home = (props) => {
                 
                 <h4 onClick={() => attemptJoinGame()}>Join Game</h4>
                 <input onChange={(e) => toggleCodeChange(parseInt(e.target.value) || 0)} value={code} />
-                <h6>Welcome MightyDeer12</h6>
+                {/* <h6>Welcome MightyDeer12</h6> */}
                 {user.hasJoinedGame ? <Redirect to={'/lobby'}/> : null}
             </div>
         </div>
