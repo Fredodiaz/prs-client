@@ -14,7 +14,8 @@
 
 .area{
     background: #ffda00;  
-	background: linear-gradient(to bottom, #ffda0075, #ba382f);
+    /* background: linear-gradient(to bottom, #ffda0075, #ba382f); */
+    background: linear-gradient(to bottom, #a50700, #ba382f);
 	width: 100%;
 	height: 100vh;
 }

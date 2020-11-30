@@ -1,16 +1,22 @@
-.banner_text {
+.home_wrap {
+	align-items:center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
 	width: 100%;
     position: absolute;
 	z-index: 1;
 }
-.banner_text a {
+
+.home_wrap a {
     text-decoration: none;
 }
-.banner_text h2 {
+.home_wrap h2 {
 	text-align: center;
 	color: #fff;
 	font-size: 50px;
-	margin: 200px 0 100px 0;
+	margin: 0 0 100px 0;
 }
 .game_options {
 	align-items: center;
@@ -25,7 +31,7 @@
 	font-size: 20px;
 }
 
-.banner_text h4 {
+.home_wrap h4 {
 	border: 1px solid white;
 	cursor: pointer;
 	text-align: center;
@@ -36,7 +42,7 @@
     width: 200px;
 }
 
-.banner_text h4:hover {
+.home_wrap h4:hover {
 	background-color: white;
 	color: #3a3a3a;
 }
@@ -46,7 +52,7 @@
 	top: 220px;
 }
 
-.banner_text input {
+.home_wrap input {
 	font-family: 'Baloo 2', cursive;
 	font-size: 24px;
 	height: 50px;
@@ -54,7 +60,7 @@
 	width: 200px;
 	text-align: center;
 }
-.banner_text p {
+.home_wrap p {
 	color: #ffffff;
 	margin: 10px;
 }
@@ -71,14 +77,14 @@
 
 /* Large devices (desktops, 992px and below) */
 @media (max-width: 992px) {
-    .banner_text h2 {
+    .home_wrap h2 {
         margin-top: 20%;
 	}
 }
 
 /* Medium devices (tablets, 768px and below) */
 @media (max-width: 768px) {
-    .banner_text h2 {
+    .home_wrap h2 {
         margin-top: 0;
     } 
 }

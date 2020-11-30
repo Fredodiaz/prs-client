@@ -51,22 +51,18 @@ const Home = (props) => {
     }
 
     return (
-        <div >
-            <div className={css.banner_text}>
-                <h2>Rock-Paper-Scissors-Royale!</h2>
-                <div className={css.game_options}>
-                    <Link style={{marginBottom: '20px'}} to={'/host'}>
-                        <h4>Host Game</h4>
-                    </Link>
-                    {joinError ? <p>Invalid Code!</p> : null}
-                    
-
-                    <h4 onClick={() => attemptJoinGame()}>Join Game</h4>
-                    <input onChange={(e) => toggleCodeChange(parseInt(e.target.value) || 0)} value={code} />
-                    <h6>Welcome MightyDeer12</h6>
-
-                    {user.hasJoinedGame ? <Redirect to={'/lobby'}/> : null}
-                </div>
+        <div className={css.home_wrap}>
+            <h2>Rock-Paper-Scissors-Royale!</h2>
+            <div className={css.game_options}>
+                <Link style={{marginBottom: '20px'}} to={'/host'}>
+                    <h4>Host Game</h4>
+                </Link>
+                {joinError ? <p>Invalid Code!</p> : null}
+                
+                <h4 onClick={() => attemptJoinGame()}>Join Game</h4>
+                <input onChange={(e) => toggleCodeChange(parseInt(e.target.value) || 0)} value={code} />
+                <h6>Welcome MightyDeer12</h6>
+                {user.hasJoinedGame ? <Redirect to={'/lobby'}/> : null}
             </div>
         </div>
     )

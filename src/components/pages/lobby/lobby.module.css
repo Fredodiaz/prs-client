@@ -1,9 +1,11 @@
 .lobby_wrap {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+	align-items:center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
     position: absolute;
-    width: 100%;
 	z-index: 1;
 }
 
@@ -11,7 +13,7 @@
 	text-align: center;
 	color: #fff;
 	font-size: 50px;
-	margin: 200px 0 10px 0;
+	margin: 0 0 10px 0;
 }
 
 .lobby_wrap a {
