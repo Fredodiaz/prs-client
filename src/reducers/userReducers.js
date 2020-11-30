@@ -1,5 +1,5 @@
 // Types
-import { SET_CURRENT_CHOICE, SET_CURRENT_ROOM, SET_IS_IN_GAME, SET_JOINED_GAME, SET_USER_NAME, SET_USER_OPPONENT } from '../actions'
+import { SET_BOTH_PLAYER_CHOICE, SET_CURRENT_CHOICE, SET_CURRENT_ROOM, SET_HAS_LOST, SET_HAS_WON, SET_IS_IN_GAME, SET_JOINED_GAME, SET_SCORE, SET_USER_NAME, SET_USER_OPPONENT } from '../actions'
 
 const initialState = {
     currentRoom: '',
@@ -7,7 +7,11 @@ const initialState = {
     isInGame: false,
     name: '',
     opponent: {},
-    currentChoice: ''
+    currentChoice: '',
+    score: {user: 0, opponent: 0, status: 'not started'},
+    playerMoves: {ofUser: 'rock', ofOpp: 'rock'},
+    hasLost: false,
+    hasWon: false,
 }
 
 const userReducers = (state=initialState, action) => {
@@ -41,6 +45,26 @@ const userReducers = (state=initialState, action) => {
             return {
                 ...state,
                 currentChoice: action.payload
+            }
+        case SET_SCORE:
+            return {
+                ...state,
+                score: action.payload
+            }
+        case SET_BOTH_PLAYER_CHOICE:
+            return {
+                ...state,
+                playerMoves: action.payload
+            }
+        case SET_HAS_LOST:
+            return {
+                ...state,
+                hasLost: action.payload
+            }
+        case SET_HAS_WON:
+            return {
+                ...state,
+                hasWon: action.payload
             }
         default:
             return state;
