@@ -25,11 +25,10 @@ const Lobby = (props) => {
 
         window.IO.on('startedGame', () => setIsUserInGame(true)) // Redirects to /game if user is in one
 
-        /* TEMP FIX: Can't register this func startround after redirect to game, so adding this before redirect */
-        window.IO.on('startedNewRound', () => {
-            window.IO.emit('findPlayerOpponent')
-            console.log('started round bbg')
-        })
+        // /* TEMP FIX: Can't register this func startround after redirect to game, so adding this before redirect */
+        // window.IO.on('startedNewRound', () => {
+        //     window.IO.emit('findPlayerOpponent')
+        // })
         // eslint-disable-next-line
     }, [])
 

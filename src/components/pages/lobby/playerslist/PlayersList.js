@@ -1,5 +1,5 @@
 // React
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 // Redux
 import { connect } from 'react-redux'
@@ -10,11 +10,11 @@ import css from './playerslist.module.css'
 const PlayersList = (props) => {
     const { game, user } = props
     
-    useEffect(() => {
-        window.IO.on('refreshLobbyPlayers', (players) => {
-        })
-        // eslint-disable-next-line
-    }, [])
+    // useEffect(() => {
+    //     // window.IO.on('refreshLobbyPlayers', (players) => {
+    //     // })
+    //     // eslint-disable-next-line
+    // }, [])
 
     // Renders Players and Highlights Client Name
     const renderPlayers = () => {
