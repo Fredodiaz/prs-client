@@ -32,6 +32,10 @@
     background-color: #e14a67;
 }
 
+.option_clicked {
+    background-color: #e14a67
+}
+
 .timer_wrap {
     align-items: center;
     display: flex;

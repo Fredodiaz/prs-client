@@ -32,7 +32,7 @@ const Game = (props) => {
             }
         })
         window.IO.on('receivePlayerOpponent', (opponent, matchNumber) => {
-            if(!unmounted && !user.hasWon) {
+            if(!unmounted && !user.hasWon && opponent) {
                 handleReceivedOpponent(opponent, matchNumber)
             }
         })

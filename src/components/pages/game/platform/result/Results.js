@@ -43,10 +43,16 @@ const Results = (props) => {
                 <p>You {user.score.status}</p>
             </div>
 
-            <div className={css.individual_option_wrap}>
+            {
+                user.opponent ? 
+                <div className={css.individual_option_wrap}>
                 <div className={css.individual_option}>{renderChoice(user.playerMoves.ofOpp)}</div>
                 <p>{user.opponent.name}</p>
-            </div>
+                </div>
+                : null
+            }
+
+
         </div>
     )
 }

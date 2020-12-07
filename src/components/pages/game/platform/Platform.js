@@ -22,6 +22,7 @@ const Platform = (props) => {
     const { user, setCurrentChoice, setScore, setBothPlayersChoice } = props
 
     const [ optionSelected, setOptionSelected ] = useState(false)
+    const [ styles, setStyles ] = useState({op1: '', op2: '', op3: ''})
 
     useEffect(() => {
         let unmounted = false;
@@ -46,18 +47,20 @@ const Platform = (props) => {
         })
 
         return () => { unmounted = true };
+        // eslint-disable-next-line
     }, [])
 
     /* When Move Is Selected Show Pop Up Of That Move */
-    const handleSelection = (selection) => {
+    const handleSelection = (selection, objNum) => {
         console.log('Selected:', selection)
         setCurrentChoice(selection)
+        setStyles({...{op1: '', op2: '', op3: ''}, [objNum]: css.option_clicked})
     }
 
-    const handleTimerEnd = () => {
-        console.log('TIME OVER', user.currentChoice)
-        window.IO.emit('handleMoveEnd')
-    }
+    // const handleTimerEnd = () => {
+    //     console.log('TIME OVER', user.currentChoice)
+    //     window.IO.emit('handleMoveEnd')
+    // }
 
     const handleChoiceMade = () => {
         let selection = ''        
@@ -80,6 +83,7 @@ const Platform = (props) => {
         }
 
         setCurrentChoice('')
+        setStyles({op1: '', op2: '', op3: ''})
     }
 
     return (
@@ -87,12 +91,12 @@ const Platform = (props) => {
             <Scoreboard />
 
             <div className={css.options_wrap}>
-                <div onClick={() => handleSelection('paper')} className={css.individual_option}><FaRegHandPaper /></div>
-                <div onClick={() => handleSelection('rock')} className={css.individual_option}><FaRegHandRock /></div>
-                <div onClick={() => handleSelection('scissors')} className={css.individual_option}><FaRegHandScissors /></div>
+                <div onClick={() => handleSelection('paper', 'op1')} className={`${css.individual_option} ${styles.op1}`}><FaRegHandPaper /></div>
+                <div onClick={() => handleSelection('rock', 'op2')} className={`${css.individual_option} ${styles.op2}`}><FaRegHandRock /></div>
+                <div onClick={() => handleSelection('scissors', 'op3')} className={`${css.individual_option} ${styles.op3}`}><FaRegHandScissors /></div>
             </div>
 
-            {optionSelected ? <Results /> : null}
+            {optionSelected || !user.hasWon ? <Results /> : null}
 
             <div className={css.timer_wrap}>
                 <Timer onTimerEnd={() => handleChoiceMade()} duration={10}/>
