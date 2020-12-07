@@ -15,7 +15,9 @@ const Home = (props) => {
     const { user, setCurrentRoom, setJoinedGame, setUserName } = props
 
     const [ joinError, setJoinError ] = useState(false)
+    const [ joinErrorMsg, setJoinErrorMsg ] = useState('')
     const [code, setCode] = useState(0)
+    const [uName, setUName] = useState('')
 
 
     useEffect(() => {
@@ -37,6 +39,7 @@ const Home = (props) => {
             setJoinedGame(true)
         } else {
             setJoinError(true)
+            setJoinErrorMsg('Invalid Code!')
             setTimeout(() => {
                 setJoinError(false)
             }, 2000)
@@ -46,8 +49,21 @@ const Home = (props) => {
 
     /* Sends Server Game Code */
     const attemptJoinGame = () => {
-        window.IO.emit('joinGame', code)
-        setCurrentRoom(code)
+        if(uName.length <= 4) {
+            setJoinError(true)
+            setJoinErrorMsg('Username must more than 4 characters!')
+            setTimeout(() => {
+                setJoinError(false)
+            }, 2000)
+        } else {
+            window.IO.emit('joinGame', code, uName)
+            setCurrentRoom(code, uName)
+        }
+    }
+
+    const capitalize = (s) => {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
     }
 
     return (
@@ -57,10 +73,13 @@ const Home = (props) => {
                 <Link style={{marginBottom: '20px'}} to={'/host'}>
                     <h4>Host Game</h4>
                 </Link>
-                {joinError ? <p>Invalid Code!</p> : null}
+                {joinError ? <p>{joinErrorMsg}</p> : null}
                 
+                <input placeholder={'Username'} onChange={(e) => setUName(capitalize(e.target.value))} value={uName} />
+
                 <h4 onClick={() => attemptJoinGame()}>Join Game</h4>
                 <input onChange={(e) => toggleCodeChange(parseInt(e.target.value) || 0)} value={code} />
+
                 {/* <h6>Welcome MightyDeer12</h6> */}
                 {user.hasJoinedGame ? <Redirect to={'/lobby'}/> : null}
             </div>
