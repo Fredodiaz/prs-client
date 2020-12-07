@@ -142,3 +142,11 @@
     width: 150px;
     z-index: 9;
 }
+
+
+/* Large devices (desktops, 992px and below) */
+@media (max-width: 992px) {
+    .temp {
+        display: none;
+    }
+}
