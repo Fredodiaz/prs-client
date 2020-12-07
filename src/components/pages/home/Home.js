@@ -51,7 +51,13 @@ const Home = (props) => {
     const attemptJoinGame = () => {
         if(uName.length <= 4) {
             setJoinError(true)
-            setJoinErrorMsg('Username must more than 4 characters!')
+            setJoinErrorMsg('Username must be more than 4 characters!')
+            setTimeout(() => {
+                setJoinError(false)
+            }, 2000)
+        } else if(uName.length >= 10){
+            setJoinError(true)
+            setJoinErrorMsg('Username must be less than 10 characters!')
             setTimeout(() => {
                 setJoinError(false)
             }, 2000)
