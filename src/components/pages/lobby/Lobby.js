@@ -23,6 +23,11 @@ const Lobby = (props) => {
             handleLeaveLobby()
         })
 
+        window.IO.on('hostRemovedYouFromGame', () => {
+            alert('Host removed you from the Game')
+            handleLeaveLobby()
+        })
+
         window.IO.on('startedGame', () => setIsUserInGame(true)) // Redirects to /game if user is in one
 
         // /* TEMP FIX: Can't register this func startround after redirect to game, so adding this before redirect */

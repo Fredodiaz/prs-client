@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, { Fragment } from 'react'
 
 // Redux
 import { connect } from 'react-redux'
@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import css from './playerslist.module.css'
 
 const PlayersList = (props) => {
-    const { game, user } = props
+    const { game, user, isHost } = props
     
     // useEffect(() => {
     //     // window.IO.on('refreshLobbyPlayers', (players) => {
@@ -19,7 +19,11 @@ const PlayersList = (props) => {
     // Renders Players and Highlights Client Name
     const renderPlayers = () => {
         return game.players.map(player => (
-            <h1 className={`${css.game_player_cell} ${player.name === user.name ? css.highlight : ''}`} key={player.id}>{player.name}</h1>
+            <Fragment>
+                {isHost ? <h1 onClick={() => window.IO.emit('hostRemovePlayer', player.id)} className={`${css.game_player_cell} ${css.host_editable}`} key={player.id}>{player.name}</h1> : 
+                <h1 className={`${css.game_player_cell} ${player.id === user.name ? css.highlight : ''}`} key={player.id}>{player.name}</h1>
+                }
+            </Fragment>
         ))
     }
 

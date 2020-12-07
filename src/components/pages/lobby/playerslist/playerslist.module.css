@@ -35,6 +35,10 @@
     color: yellow;
 }
 
+.host_editable:hover {
+    color: red;
+    cursor: pointer;
+}
 
 
 
