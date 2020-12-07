@@ -46,6 +46,7 @@ const Platform = (props) => {
             }
         })
 
+
         return () => { unmounted = true };
         // eslint-disable-next-line
     }, [])
@@ -96,7 +97,7 @@ const Platform = (props) => {
                 <div onClick={() => handleSelection('scissors', 'op3')} className={`${css.individual_option} ${styles.op3}`}><FaRegHandScissors /></div>
             </div>
 
-            {optionSelected || !user.hasWon ? <Results /> : null}
+            {optionSelected && !user.hasWon ? <Results /> : null}
 
             <div className={css.timer_wrap}>
                 <Timer onTimerEnd={() => handleChoiceMade()} duration={10}/>
