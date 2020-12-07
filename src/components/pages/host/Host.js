@@ -1,6 +1,6 @@
 // React
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useEffect, useState } from 'react'
+import { Link, Redirect } from 'react-router-dom'
 
 // Redux
 import { connect } from 'react-redux'
@@ -16,6 +16,7 @@ const Host = (props) => {
 
     const [ GAMECODE, SETGAMECODE ] = useState(12345)
     const [ disabled, setDisables ] = useState(false)
+    const [ startedGame, setStartedGame ] = useState(false)
 
     useEffect(() => {
         window.IO.on('gameCode', handleGameCode)
@@ -37,6 +38,7 @@ const Host = (props) => {
             alert('Must need at least two players to start the game')
         } else {
             window.IO.emit('hostStartedGame');
+            setStartedGame(true)
         }
     }
 
@@ -44,16 +46,23 @@ const Host = (props) => {
         <div className={css.host_wrap}>
             {/* {hasStartedGame ? <Results /> :  */}
             <h2>Rock-Paper-Scissors-Royale!</h2>
-            <div className={css.gamecode_wrap}>
-                <h1 className={css.header}>Game Code: {GAMECODE}</h1>
-                <Players />
-            </div>
-            {disabled ? <h4 className={css.start_game} >Start Game</h4> : 
-            <h4 className={css.start_game} onClick={() => handleHostStartGame()}>Start Game</h4>}
-            <Link onClick={handleHostLeave} style={{textDecoration: 'none'}} to={'/'}>
-                <h4>Go Back</h4>
-            </Link>
-            <p className={css.warning}>(Warning: "Go Back" will remove all players from this match)</p>
+
+            {
+                !startedGame ? 
+                <Fragment>
+                    <div className={css.gamecode_wrap}>
+                        <h1 className={css.header}>Game Code: {GAMECODE}</h1>
+                        <Players isHost={true}/>
+                    </div>
+            
+                    {disabled ? <h4 className={css.start_game} >Start Game</h4> : 
+                    <h4 className={css.start_game} onClick={() => handleHostStartGame()}>Start Game</h4>}
+                    <Link onClick={handleHostLeave} style={{textDecoration: 'none'}} to={'/'}>
+                        <h4>Go Back</h4>
+                    </Link>
+                    <p className={css.warning}>(Warning: "Go Back" will remove all players from this match)</p>
+                </Fragment> : <h1 style={{color: "white"}}>Thank you for hosting the game!</h1>
+            }
         </div>
     )
 }
